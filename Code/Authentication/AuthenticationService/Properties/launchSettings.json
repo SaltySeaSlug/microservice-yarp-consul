@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "AuthenticationService": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:5041;http://localhost:5040"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": false,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/login",
+      "publishAllPorts": false,
+      "useSSL": false
+    }
+  }
+}

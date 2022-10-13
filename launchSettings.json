@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "consul-server": "StartWithoutDebugging",
+        "drinkservice": "StartDebugging",
+        "foodservice": "StartDebugging",
+        "gateway": "StartDebugging"
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+version: '3.4'
+
+name: microservice
+services:
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql-server
+    ports:
+      - 1433:1433
+    volumes:
+      - ~/apps/mssql/data:/var/lib/mssqlql/data
+    networks:
+      - backend
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mssql1Ipw
+
+  consul-server:
+    image: hashicorp/consul:latest
+    container_name: consul-server
+    restart: always
+    networks:
+      - backend
+    ports:
+      - "8500:8500"
+
+  drinkservice:
+    image: ${DOCKER_REGISTRY-}drinkservice
+    container_name: drink-service
+    restart: on-failure
+    depends_on:
+      - consul-server
+    build:
+      context: .
+      dockerfile: Code/DrinkService/Dockerfile
+    networks:
+      - backend
+
+  foodservice:
+    image: ${DOCKER_REGISTRY-}foodservice
+    container_name: food-service
+    restart: on-failure
+    depends_on:
+      - consul-server
+    build:
+      context: .
+      dockerfile: Code/FoodService/Dockerfile
+    networks:
+      - backend
+
+  authenticationservice:
+    image: ${DOCKER_REGISTRY-}authenticationservice
+    container_name: authentication-service
+    restart: on-failure
+    depends_on:
+      - consul-server
+    build:
+      context: .
+      dockerfile: Code/Authentication/AuthenticationService/Dockerfile
+    networks:
+      - backend
+
+  gateway:
+    image: ${DOCKER_REGISTRY-}gateway
+    container_name: gateway-service
+    restart: on-failure
+    depends_on:
+      - consul-server
+    build:
+      context: .
+      dockerfile: Code/Gateway/Gateway/Dockerfile
+    networks:
+      - backend
+      - frontend
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+
+networks:
+  backend:
+  frontend:

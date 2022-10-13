@@ -1,0 +1,21 @@
+{
+  "profiles": {
+    "FoodService": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "food",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:5011;http://localhost:5010"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": false,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/food",
+      "publishAllPorts": false,
+      "useSSL": false
+    }
+  }
+}
